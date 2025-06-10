@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love for Mom & Sister</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .ship {
+      animation: shipUp 5s infinite ease-in-out;
+    }
+    @keyframes shipUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-blue-100 to-purple-200 min-h-screen flex flex-col items-center justify-center font-sans">
+  <!-- Animated Ship Image -->
+  <div class="mb-10">
+    <img src="https://cdn-icons-png.flaticon.com/512/2395/2395793.png" alt="Ship" class="w-32 h-32 ship" />
+  </div>
+
+  <!-- Button to Show Messages -->
+  <button onclick="showLove()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded shadow-md mb-6">
+    Show My Love 💖
+  </button>
+
+  <!-- Message Container -->
+  <div id="messageBox" class="text-center space-y-4 max-w-md px-4">
+    <!-- Love messages will appear here -->
+  </div>
+
+  <script>
+    const messages = [
+      "Mom, your love is my strength every day ❤️",
+      "Big Sister, you are my role model and protector 💕",
+      "Every moment with you both is a blessing 🌸",
+      "Thank you for being my constant support 💐",
+      "You are my heart and soul, Mom and Sis 💖",
+      "My love for you both is endless and pure ✨",
+      "You make my life beautiful, Mom and Big Sister 🌷",
+      "My heroes don't wear capes—they are my mom and sister 🦸‍♀️",
+      "I smile because of the love you give me 🌈"
+    ];
+
+    function showLove() {
+      const container = document.getElementById("messageBox");
+      container.innerHTML = "";
+      messages.sort(() => Math.random() - 0.5); // Shuffle messages
+      messages.slice(0, 5).forEach(msg => {
+        const p = document.createElement("p");
+        p.textContent = msg;
+        p.className = "text-lg text-purple-800 bg-white p-3 rounded shadow animate-fade-in";
+        container.appendChild(p);
+      });
+    }
+  </script>
+
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.5s ease-in-out;
+    }
+  </style>
+</body>
+</html>
