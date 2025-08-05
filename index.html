@@ -283,6 +283,8 @@
                 max-height: 100vh;
                 border-radius: 0;
                 box-shadow: none;
+                display: flex;
+                flex-direction: column;
             }
 
             #nav-bar {
@@ -306,23 +308,32 @@
             }
 
             #chat-input {
-                padding: 10px;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: #1e1e1e;
-                z-index: 100;
-                padding-bottom: env(safe-area-inset-bottom);
+                padding: 8px 10px; /* Reduced padding for a smaller gap */
+                position: static; /* Let it flow naturally */
+                bottom: unset;
+                left: unset;
+                right: unset;
                 height: auto;
+                flex-shrink: 0; /* Prevents it from shrinking */
             }
-            
-            /* Key fix: The messages container's height is now calculated to fit precisely */
+
             #messages {
-                padding-bottom: 75px;
+                padding-bottom: 10px; /* Adjusted padding */
                 box-sizing: border-box;
-                height: calc(100% - 62px - 75px); /* Subtract nav-bar height and input-bar height */
+                height: calc(100% - 62px - 62px); /* A bit more space for the input bar and nav bar */
                 overflow-y: auto;
+            }
+
+            #input-message {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                border-radius: 20px;
+            }
+
+            #chat-input button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                border-radius: 20px;
             }
         }
     </style>
