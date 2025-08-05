@@ -7,13 +7,13 @@
     <title>Arya - Your Social Coach</title>
     <style>
         :root {
-            --primary-color: #bb86fc;
-            --secondary-color: #121212;
-            --text-color: #e0e0e0;
-            --accent-color: #3700b3;
-            --user-bubble-color: #332d41;
-            --ai-bubble-color: #212121;
-            --audio-btn-color: #bb86fc;
+            --primary-color: #5d5d81;
+            --secondary-color: #f0f2f5;
+            --text-color: #121212;
+            --accent-color: #3b3b64;
+            --user-bubble-color: #e3effd;
+            --ai-bubble-color: #ffffff;
+            --audio-btn-color: #5d5d81;
             --animation-duration: 0.3s;
         }
 
@@ -35,18 +35,18 @@
         #chat-container {
             width: 90%;
             max-width: 650px;
-            background: #1e1e1e;
+            background: var(--ai-bubble-color);
             border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            height: 100%;
+            height: 75vh;
             max-height: 850px;
             overflow: hidden;
         }
 
         #nav-bar {
-            background-color: #2c2c2c;
+            background-color: var(--primary-color);
             padding: 15px 20px;
             border-bottom: 1px solid #424242;
             display: flex;
@@ -54,16 +54,18 @@
             justify-content: center;
             position: relative;
             flex-shrink: 0;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
         }
 
         #nav-bar h1 {
             margin: 0;
             font-size: 1.25rem;
-            color: var(--primary-color);
+            color: #ffffff;
             letter-spacing: 2px;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 2px solid var(--primary-color);
+            border-right: 2px solid #ffffff;
             animation:
                 typing 2s steps(40, end) forwards,
                 blink-caret 0.75s step-end infinite;
@@ -84,7 +86,7 @@
                 border-color: transparent;
             }
             50% {
-                border-color: var(--primary-color);
+                border-color: #ffffff;
             }
         }
 
@@ -104,7 +106,7 @@
         }
 
         #messages::-webkit-scrollbar-thumb {
-            background-color: #555;
+            background-color: #ced4da;
             border-radius: 10px;
             border: 2px solid var(--secondary-color);
         }
@@ -115,7 +117,7 @@
             max-width: 85%;
             word-wrap: break-word;
             position: relative;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: all var(--animation-duration) ease-in-out;
             display: flex;
             align-items: flex-end;
@@ -145,6 +147,7 @@
             background: var(--ai-bubble-color);
             color: var(--text-color);
             border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .message-text {
@@ -178,6 +181,7 @@
             max-width: 85%;
             position: relative;
             animation: fadeIn var(--animation-duration) ease-out forwards;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .typing-indicator span {
@@ -211,17 +215,19 @@
 
         #chat-input {
             display: flex;
-            padding: 8px 10px;
-            border-top: 1px solid #424242;
-            background: #1e1e1e;
+            padding: 10px;
+            border-top: 1px solid #e0e0e0;
+            background: #fcfcfc;
             flex-shrink: 0;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
         }
 
         #input-message {
             flex-grow: 1;
             padding: 12px 18px;
-            border: 1px solid #424242;
-            background: #2c2c2c;
+            border: 1px solid #ced4da;
+            background: #ffffff;
             color: var(--text-color);
             border-radius: 24px;
             font-size: 1rem;
@@ -238,14 +244,14 @@
 
         #input-message:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(187, 134, 252, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(93, 93, 129, 0.25);
         }
 
         #chat-input button {
             padding: 12px 25px;
             margin-left: 10px;
             background: var(--primary-color);
-            color: #121212;
+            color: white;
             border: none;
             border-radius: 24px;
             cursor: pointer;
@@ -259,7 +265,7 @@
         }
 
         #chat-input button:active {
-            background: #a45df0;
+            background: #3b3b64;
         }
 
         .sending {
@@ -298,6 +304,8 @@
 
             #nav-bar {
                 padding: 10px 15px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
             }
 
             #nav-bar h1 {
@@ -323,7 +331,9 @@
 
             #chat-input {
                 padding: 8px 10px;
-                position: relative; /* Let's keep it here */
+                position: relative;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
             }
 
             #input-message {
@@ -421,7 +431,6 @@
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    // Removed the auto-scroll here to let the user see previous messages while typing
                     setTimeout(type, speed);
                 }
             }
@@ -468,9 +477,8 @@
             }
         }
 
-        // This is a new fix to prevent scrolling to the bottom on initial load
         window.addEventListener('load', () => {
-            messagesDiv.scrollTop = 0;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         });
     </script>
 </body>
