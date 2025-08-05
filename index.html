@@ -63,7 +63,7 @@
             border-bottom: 1px solid #424242;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Added space-between */
+            justify-content: space-between;
             position: relative;
             flex-shrink: 0;
             border-top-left-radius: 16px;
@@ -329,11 +329,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
-                transition: height var(--animation-duration) ease-in-out, background-color var(--animation-duration) ease-in-out;
-            }
-
-            #chat-container.keyboard-open {
-                height: 50vh;
+                transition: all var(--animation-duration) ease-in-out;
             }
 
             #nav-bar {
@@ -401,7 +397,6 @@
     </div>
 
     <script>
-        const chatContainer = document.getElementById("chat-container");
         const messagesDiv = document.getElementById("messages");
         const inputMessage = document.getElementById("input-message");
         const sendButton = document.getElementById("send-button");
@@ -424,18 +419,20 @@
             document.body.classList.toggle('dark-mode');
         });
 
-        // Dynamic height change for mobile on keyboard focus
-        inputMessage.addEventListener("focus", function() {
+        // Automatically open the keyboard on page load
+        window.addEventListener('load', () => {
             if (window.innerWidth <= 480) {
-                chatContainer.classList.add('keyboard-open');
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                inputMessage.focus();
             }
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         });
 
+        // Force the keyboard to stay open by re-focusing on blur
         inputMessage.addEventListener("blur", function() {
             if (window.innerWidth <= 480) {
-                chatContainer.classList.remove('keyboard-open');
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                setTimeout(() => {
+                    inputMessage.focus();
+                }, 100);
             }
         });
 
@@ -532,10 +529,6 @@
                 });
             }
         }
-
-        window.addEventListener('load', () => {
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        });
     </script>
 </body>
 
