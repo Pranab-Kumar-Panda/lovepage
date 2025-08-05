@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Arya - Your Social Coach</title>
     <style>
         :root {
@@ -271,6 +271,7 @@
             }
         }
 
+        /* --- MOBILE-SPECIFIC FIXES --- */
         @media (max-width: 480px) {
             body {
                 padding: 0;
@@ -312,13 +313,16 @@
                 right: 0;
                 background: #1e1e1e;
                 z-index: 100;
-                /* This is the key fix for the keyboard issue */
                 padding-bottom: env(safe-area-inset-bottom);
                 height: auto;
             }
             
+            /* Key fix: The messages container's height is now calculated to fit precisely */
             #messages {
                 padding-bottom: 75px;
+                box-sizing: border-box;
+                height: calc(100% - 62px - 75px); /* Subtract nav-bar height and input-bar height */
+                overflow-y: auto;
             }
         }
     </style>
@@ -342,8 +346,6 @@
         const inputMessage = document.getElementById("input-message");
         const sendButton = document.getElementById("send-button");
         let typingIndicator;
-        
-        // This is a new variable to store the SpeechSynthesisUtterance object
         let speechSynth = window.speechSynthesis;
 
         const messages = [{
@@ -413,7 +415,6 @@
             type();
         }
 
-        // Updated playAudio function for better reliability
         function playAudio(text) {
             if (speechSynth.speaking) {
                 speechSynth.cancel();
