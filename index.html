@@ -124,7 +124,7 @@
             gap: 12px;
             flex-shrink: 1;
             min-height: 0;
-            scroll-behavior: smooth; /* Smooth scrolling added here */
+            scroll-behavior: smooth;
         }
 
         #messages::-webkit-scrollbar {
@@ -317,7 +317,7 @@
                 padding: 0;
                 overflow: hidden;
             }
-            
+
             #chat-container {
                 width: 100vw;
                 height: 100vh;
@@ -487,17 +487,15 @@
             }
         }
 
-        // Updated typeWriter function for smooth scrolling
         function typeWriter(text, element, speed = 25) {
             let i = 0;
             function type() {
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight; // Continuously scroll
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
                     setTimeout(type, speed);
                 } else {
-                    // Final scroll after animation ends
                     messagesDiv.scrollTop = messagesDiv.scrollHeight;
                 }
             }
