@@ -21,15 +21,15 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-color: var(--secondary-color);
-            flex-direction: column;
-            color: var(--text-color);
-            padding: 20px;
+            height: 100vh;
+            width: 100vw;
             box-sizing: border-box;
+            overflow: hidden;
         }
 
         #chat-container {
@@ -40,7 +40,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
-            height: 75vh;
+            height: 100%;
             max-height: 850px;
             overflow: hidden;
         }
@@ -96,6 +96,7 @@
             flex-direction: column;
             gap: 12px;
             flex-shrink: 1;
+            min-height: 0;
         }
 
         #messages::-webkit-scrollbar {
@@ -226,6 +227,9 @@
             font-size: 1rem;
             transition: border-color var(--animation-duration) ease, box-shadow var(--animation-duration) ease;
             outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         #input-message::placeholder {
@@ -273,21 +277,23 @@
                 transform: scale(1);
             }
         }
-        
+
         /* --- MOBILE-SPECIFIC FIXES --- */
         @media (max-width: 480px) {
             body {
                 padding: 0;
+                overflow: hidden;
             }
-
+            
             #chat-container {
-                width: 100%;
+                width: 100vw;
                 height: 100vh;
                 max-height: 100vh;
                 border-radius: 0;
                 box-shadow: none;
-                display: flex;
-                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
             }
 
             #nav-bar {
@@ -297,12 +303,10 @@
             #nav-bar h1 {
                 font-size: 1.1rem;
             }
-            
+
             #messages {
                 padding: 10px;
-                gap: 8px; /* Reduced gap between messages */
-                flex-grow: 1;
-                overflow-y: auto;
+                gap: 8px;
             }
 
             .message {
@@ -319,6 +323,7 @@
 
             #chat-input {
                 padding: 8px 10px;
+                position: relative; /* Let's keep it here */
             }
 
             #input-message {
@@ -416,7 +421,7 @@
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    // Removed the auto-scroll here to let the user see previous messages while typing
                     setTimeout(type, speed);
                 }
             }
@@ -462,8 +467,8 @@
                 });
             }
         }
-        
-        // This is the fix to prevent scrolling to the bottom on page load
+
+        // This is a new fix to prevent scrolling to the bottom on initial load
         window.addEventListener('load', () => {
             messagesDiv.scrollTop = 0;
         });
