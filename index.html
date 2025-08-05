@@ -11,24 +11,25 @@
             --secondary-color: #f0f2f5;
             --text-color: #121212;
             --accent-color: #3b3b64;
-            --user-bubble-color: #e3effd;
+            --user-bubble-color: #dcf8c6;
             --ai-bubble-color: #ffffff;
             --audio-btn-color: #5d5d81;
             --animation-duration: 0.3s;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
         /* --- Dark Mode Colors --- */
         body.dark-mode {
             --secondary-color: #121212;
             --text-color: #e0e0e0;
-            --user-bubble-color: #332d41;
+            --user-bubble-color: #075e54;
             --ai-bubble-color: #1e1e1e;
-            --primary-color: #bb86fc;
-            --accent-color: #3700b3;
+            --primary-color: #0c6155;
+            --accent-color: #0c6155;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: var(--font-family);
             margin: 0;
             padding: 0;
             background-color: var(--secondary-color);
@@ -47,8 +48,8 @@
             width: 90%;
             max-width: 650px;
             background: var(--ai-bubble-color);
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             height: 75vh;
@@ -66,8 +67,8 @@
             justify-content: space-between;
             position: relative;
             flex-shrink: 0;
-            border-top-left-radius: 16px;
-            border-top-right-radius: 16px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
             transition: background-color var(--animation-duration) ease-in-out;
         }
 
@@ -75,14 +76,12 @@
             margin: 0;
             font-size: 1.25rem;
             color: #ffffff;
-            letter-spacing: 2px;
-            white-space: nowrap;
+            letter-spacing: 1px;
+            animation: typing 2s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+            width: fit-content;
             overflow: hidden;
             border-right: 2px solid #ffffff;
-            animation:
-                typing 2s steps(40, end) forwards,
-                blink-caret 0.75s step-end infinite;
-            width: 0;
+            white-space: nowrap;
         }
 
         #dark-mode-toggle {
@@ -93,6 +92,7 @@
             cursor: pointer;
             transition: color var(--animation-duration) ease-in-out;
         }
+
         #dark-mode-toggle:hover {
             color: #ccc;
         }
@@ -101,15 +101,18 @@
             from {
                 width: 0;
             }
+
             to {
                 width: 100%;
             }
         }
 
         @keyframes blink-caret {
-            from, to {
+            from,
+            to {
                 border-color: transparent;
             }
+
             50% {
                 border-color: #ffffff;
             }
@@ -121,10 +124,18 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             flex-shrink: 1;
             min-height: 0;
             scroll-behavior: smooth;
+            background-color: #e5ddd5;
+            /* WhatsApp-like background */
+            transition: background-color var(--animation-duration) ease-in-out;
+        }
+        
+        /* Dark mode message background */
+        body.dark-mode #messages {
+            background-color: #101918;
         }
 
         #messages::-webkit-scrollbar {
@@ -132,7 +143,7 @@
         }
 
         #messages::-webkit-scrollbar-thumb {
-            background-color: #ced4da;
+            background-color: #a0a0a0;
             border-radius: 10px;
             border: 2px solid var(--secondary-color);
         }
@@ -143,7 +154,7 @@
             max-width: 85%;
             word-wrap: break-word;
             position: relative;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             transition: all var(--animation-duration) ease-in-out;
             display: flex;
             align-items: flex-end;
@@ -173,11 +184,12 @@
             background: var(--ai-bubble-color);
             color: var(--text-color);
             border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .message-text {
             flex-grow: 1;
+            word-break: break-word;
         }
 
         .audio-btn {
@@ -207,7 +219,7 @@
             max-width: 85%;
             position: relative;
             animation: fadeIn var(--animation-duration) ease-out forwards;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .typing-indicator span {
@@ -229,10 +241,13 @@
         }
 
         @keyframes bounce {
-            0%, 80%, 100% {
+            0%,
+            80%,
+            100% {
                 transform: scale(0);
                 opacity: 0;
             }
+
             40% {
                 transform: scale(1);
                 opacity: 1;
@@ -241,12 +256,13 @@
 
         #chat-input {
             display: flex;
+            align-items: center;
             padding: 8px 10px;
             border-top: 1px solid #e0e0e0;
             background: #fcfcfc;
             flex-shrink: 0;
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
             transition: background-color var(--animation-duration) ease-in-out;
         }
 
@@ -263,6 +279,13 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode #input-message {
+            background-color: #2c2c2c;
+            border-color: #444;
+            color: #e0e0e0;
         }
 
         #input-message::placeholder {
@@ -285,6 +308,7 @@
             font-size: 1rem;
             transition: background-color var(--animation-duration) ease-in-out;
             outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         #chat-input button:hover {
@@ -292,7 +316,7 @@
         }
 
         #chat-input button:active {
-            background: #3b3b64;
+            transform: scale(0.95);
         }
 
         .sending {
@@ -303,9 +327,11 @@
             0% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.05);
             }
+
             100% {
                 transform: scale(1);
             }
@@ -387,13 +413,14 @@
     <div id="chat-container">
         <div id="nav-bar">
             <h1>Arya</h1>
-            <button id="dark-mode-toggle">
-                &#9789; </button>
+            <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+                &#9789;
+            </button>
         </div>
         <div id="messages"></div>
         <div id="chat-input">
-            <input type="text" id="input-message" placeholder="Aap kaise ho? Start a conversation..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-            <button id="send-button">Send</button>
+            <input type="text" id="input-message" placeholder="Aap kaise ho? Start a conversation..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-label="Type your message">
+            <button id="send-button" aria-label="Send message">Send</button>
         </div>
     </div>
 
@@ -421,21 +448,13 @@
             document.body.classList.toggle('dark-mode');
         });
 
-        // Toggle isTyping flag on focus/blur
+        // Add a focus event listener to scroll to the bottom when the input is focused on mobile
         inputMessage.addEventListener("focus", function() {
-            isTyping = true;
-        });
-
-        inputMessage.addEventListener("blur", function() {
-            isTyping = false;
-            // Force the keyboard to stay open by re-focusing on blur
             if (window.innerWidth <= 480) {
-                setTimeout(() => {
-                    inputMessage.focus();
-                }, 100);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
             }
         });
-        
+
         // Auto-scroll on load
         window.addEventListener('load', () => {
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -446,7 +465,6 @@
             typingIndicator.classList.add("typing-indicator");
             typingIndicator.innerHTML = '<span></span><span></span><span></span>';
             messagesDiv.appendChild(typingIndicator);
-            // Auto-scroll only when typing indicator is shown
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
@@ -470,17 +488,17 @@
                 const audioButton = document.createElement("button");
                 audioButton.innerHTML = '&#9658;';
                 audioButton.classList.add("audio-btn");
+                audioButton.setAttribute('aria-label', 'Listen to message');
                 audioButton.onclick = () => playAudio(msg);
                 messageContainer.appendChild(audioButton);
             }
 
             messagesDiv.appendChild(messageContainer);
-            
+
             if (!isUser) {
                 typeWriter(msg, messageTextSpan);
             } else {
                 messageTextSpan.textContent = msg;
-                // Auto-scroll for user message
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             }
         }
@@ -491,10 +509,8 @@
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    // Removed continuous scrolling during typing
                     setTimeout(type, speed);
                 } else {
-                    // Final scroll after animation ends
                     messagesDiv.scrollTop = messagesDiv.scrollHeight;
                 }
             }
@@ -517,9 +533,7 @@
                 addMessage(message, true);
                 inputMessage.value = '';
                 sendButton.classList.add("sending");
-                setTimeout(() => {
-                    sendButton.classList.remove("sending");
-                }, 300);
+                inputMessage.disabled = true; // Disable input while sending
 
                 messages.push({
                     content: message,
@@ -536,6 +550,10 @@
                     removeTypingIndicator();
                     console.error("AI response error:", error);
                     addMessage("Sorry, I'm having trouble connecting right now. Please try again.", false);
+                }).finally(() => {
+                    sendButton.classList.remove("sending");
+                    inputMessage.disabled = false; // Re-enable input
+                    inputMessage.focus();
                 });
             }
         }
