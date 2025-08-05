@@ -63,20 +63,28 @@
             white-space: nowrap;
             overflow: hidden;
             border-right: 2px solid var(--primary-color);
-            animation: 
+            animation:
                 typing 2s steps(40, end) forwards,
                 blink-caret 0.75s step-end infinite;
             width: 0;
         }
 
         @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
         }
 
         @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--primary-color); }
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: var(--primary-color);
+            }
         }
 
         #messages {
@@ -267,7 +275,7 @@
             body {
                 padding: 0;
             }
-            
+
             #chat-container {
                 width: 100%;
                 height: 100vh;
@@ -275,7 +283,7 @@
                 border-radius: 0;
                 box-shadow: none;
             }
-            
+
             #nav-bar {
                 padding: 10px 15px;
             }
@@ -304,22 +312,13 @@
                 right: 0;
                 background: #1e1e1e;
                 z-index: 100;
+                /* This is the key fix for the keyboard issue */
+                padding-bottom: env(safe-area-inset-bottom);
+                height: auto;
             }
             
             #messages {
-                padding-bottom: 75px; /* Adjust padding to make space for the fixed input bar */
-            }
-
-            #input-message {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-                border-radius: 20px;
-            }
-
-            #chat-input button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                border-radius: 20px;
+                padding-bottom: 75px;
             }
         }
     </style>
@@ -343,6 +342,9 @@
         const inputMessage = document.getElementById("input-message");
         const sendButton = document.getElementById("send-button");
         let typingIndicator;
+        
+        // This is a new variable to store the SpeechSynthesisUtterance object
+        let speechSynth = window.speechSynthesis;
 
         const messages = [{
             role: 'system',
@@ -411,11 +413,15 @@
             type();
         }
 
+        // Updated playAudio function for better reliability
         function playAudio(text) {
+            if (speechSynth.speaking) {
+                speechSynth.cancel();
+            }
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'hi-IN';
             utterance.rate = 1;
-            window.speechSynthesis.speak(utterance);
+            speechSynth.speak(utterance);
         }
 
         function sendMessage() {
