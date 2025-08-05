@@ -43,6 +43,7 @@
             height: 75vh;
             max-height: 850px;
             overflow: hidden;
+            transition: all var(--animation-duration) ease-in-out;
         }
 
         #nav-bar {
@@ -215,7 +216,7 @@
 
         #chat-input {
             display: flex;
-            padding: 10px;
+            padding: 8px 10px;
             border-top: 1px solid #e0e0e0;
             background: #fcfcfc;
             flex-shrink: 0;
@@ -225,7 +226,7 @@
 
         #input-message {
             flex-grow: 1;
-            padding: 12px 18px;
+            padding: 10px 15px; /* Reduced padding for smaller height */
             border: 1px solid #ced4da;
             background: #ffffff;
             color: var(--text-color);
@@ -248,7 +249,7 @@
         }
 
         #chat-input button {
-            padding: 12px 25px;
+            padding: 10px 20px; /* Reduced padding for smaller height */
             margin-left: 10px;
             background: var(--primary-color);
             color: white;
@@ -292,14 +293,22 @@
             }
             
             #chat-container {
-                width: 100vw;
+                width: 100vw; /* Reverted to 100vw */
                 height: 100vh;
                 max-height: 100vh;
                 border-radius: 0;
                 box-shadow: none;
                 position: fixed;
-                top: 0;
+                bottom: 0;
                 left: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                transition: all var(--animation-duration) ease-in-out;
+            }
+
+            #chat-container.keyboard-open {
+                height: 50vh; /* Dynamic height change on keyboard open */
             }
 
             #nav-bar {
@@ -337,13 +346,13 @@
             }
 
             #input-message {
-                padding: 10px 15px;
+                padding: 8px 15px; /* Even smaller padding */
                 font-size: 0.9rem;
                 border-radius: 20px;
             }
 
             #chat-input button {
-                padding: 10px 20px;
+                padding: 8px 20px; /* Even smaller padding */
                 font-size: 0.9rem;
                 border-radius: 20px;
             }
@@ -365,6 +374,7 @@
     </div>
 
     <script>
+        const chatContainer = document.getElementById("chat-container");
         const messagesDiv = document.getElementById("messages");
         const inputMessage = document.getElementById("input-message");
         const sendButton = document.getElementById("send-button");
@@ -382,6 +392,19 @@
             }
         });
         sendButton.addEventListener("click", sendMessage);
+
+        // Dynamic height change for mobile on keyboard focus
+        inputMessage.addEventListener("focus", function() {
+            if (window.innerWidth <= 480) {
+                chatContainer.classList.add('keyboard-open');
+            }
+        });
+
+        inputMessage.addEventListener("blur", function() {
+            if (window.innerWidth <= 480) {
+                chatContainer.classList.remove('keyboard-open');
+            }
+        });
 
         function showTypingIndicator() {
             typingIndicator = document.createElement("div");
