@@ -404,7 +404,7 @@
         const darkModeToggle = document.getElementById("dark-mode-toggle");
         let typingIndicator;
         let speechSynth = window.speechSynthesis;
-        let isTyping = false; // New variable to track typing state
+        let isTyping = false;
 
         const messages = [{
             role: 'system',
@@ -446,10 +446,8 @@
             typingIndicator.classList.add("typing-indicator");
             typingIndicator.innerHTML = '<span></span><span></span><span></span>';
             messagesDiv.appendChild(typingIndicator);
-            // Only auto-scroll if the user is not typing
-            if (!isTyping) {
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }
+            // Auto-scroll only when typing indicator is shown
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
         function removeTypingIndicator() {
@@ -493,15 +491,15 @@
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    // Removed continuous scrolling during typing
                     setTimeout(type, speed);
                 } else {
+                    // Final scroll after animation ends
                     messagesDiv.scrollTop = messagesDiv.scrollHeight;
                 }
             }
             type();
         }
-
 
         function playAudio(text) {
             if (speechSynth.speaking) {
